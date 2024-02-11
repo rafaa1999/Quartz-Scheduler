@@ -39,6 +39,7 @@ public class SchedulerService {
        }
 
     }
+
    public List<TimerInfo> getAllRunningTimers () {
        try {
           return scheduler.getJobKeys(GroupMatcher.anyGroup())
@@ -74,10 +75,32 @@ public class SchedulerService {
        }
    }
 
+   public void updateTimer(final String timerId, final TimerInfo info) {
+       try {
+           final JobDetail jobDetail = scheduler.getJobDetail(new JobKey(timerId));
+           if(jobDetail == null) {
+               return;
+           }
+           jobDetail.getJobDataMap().put(timerId, info);
+       } catch (SchedulerException e) {
+           Log.error(e.getMessage(), e);
+       }
+   }
+
+   public Boolean deleteTimer(final String timerId) {
+       try {
+           return scheduler.deleteJob(new JobKey(timerId));
+       } catch (SchedulerException e) {
+          Log.error(e.getMessage(), e);
+          return false;
+       }
+   }
+
    @PostConstruct
    public void init() {
        try {
            scheduler.start();
+           scheduler.getListenerManager().addTriggerListener(new SimpleTriggerListener(this));
        }catch (SchedulerException e) {
           Log.error(e.getMessage(), e);
        }

@@ -15,7 +15,7 @@ public class Jobs implements Job {
     public void execute(JobExecutionContext context) throws JobExecutionException {
        JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
        TimerInfo info = (TimerInfo) jobDataMap.get(Jobs.class.getSimpleName());
-       Log.info(info.getCallbackData());
+       Log.info("Remaining fire count is '{}'", info.getRemainingFireCount());
     }
 
 }

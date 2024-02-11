@@ -2,10 +2,19 @@ package com.rafaa.quartz.info;
 
 public class TimerInfo {
    private int totalFireCount;
+   private int remainingFireCount;
    private boolean runForever;
    private long repeatIntervalMs;
    private long initialOffsetMs;
    private String callbackData;
+
+    public int getRemainingFireCount() {
+        return remainingFireCount;
+    }
+
+    public void setRemainingFireCount(int remainingFireCount) {
+        this.remainingFireCount = remainingFireCount;
+    }
 
     public int getTotalFireCount() {
         return totalFireCount;
