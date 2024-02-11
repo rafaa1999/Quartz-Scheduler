@@ -5,14 +5,14 @@ import org.quartz.*;
 
 import java.util.Date;
 
-public class TimerUtils {
+public final class TimerUtils {
     public TimerUtils() { }
 
     public static JobDetail buildJobDetail (final Class jobClass, final TimerInfo info) {
         final JobDataMap jobDataMap = new JobDataMap();
         jobDataMap.put(jobClass.getSimpleName(), info);
         return JobBuilder
-                .newJob()
+                .newJob(jobClass)
                 .withIdentity(jobClass.getSimpleName())
                 .setJobData(jobDataMap)
                 .build();

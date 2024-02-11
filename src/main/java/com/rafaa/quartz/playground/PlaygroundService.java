@@ -6,6 +6,8 @@ import com.rafaa.quartz.timeservice.SchedulerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PlaygroundService {
    final private SchedulerService scheduler;
@@ -21,7 +23,14 @@ public class PlaygroundService {
       info.setRepeatIntervalMs(2000);
       info.setInitialOffsetMs(1000);
       info.setCallbackData("My callback data");
-      scheduler.schedule(Jobs.class, null);
+      scheduler.schedule(Jobs.class, info);
    }
 
+   public List<TimerInfo> getAllRunningTimers() {
+      return scheduler.getAllRunningTimers();
+   }
+
+   public TimerInfo getRunningTimer(String timerId) {
+     return scheduler.getRunningTimer(timerId);
+   }
 }
