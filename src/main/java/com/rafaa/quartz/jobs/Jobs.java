@@ -1,8 +1,7 @@
 package com.rafaa.quartz.jobs;
 
-import org.quartz.Job;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
+import com.rafaa.quartz.info.TimerInfo;
+import org.quartz.*;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
@@ -13,8 +12,10 @@ public class Jobs implements Job {
     private static final Logger Log = LoggerFactory.getLogger(Jobs.class);
 
     @Override
-    public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-       Log.info("Jobs");
+    public void execute(JobExecutionContext context) throws JobExecutionException {
+       JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
+       TimerInfo info = (TimerInfo) jobDataMap.get(Jobs.class.getSimpleName());
+       Log.info(info.getCallbackData());
     }
 
 }
